@@ -73,5 +73,6 @@ Public repository: https://github.com/leelaamaj/airbnb-ui-clone
 
 - `required-complete` points to required-only commit `2302a90`, recorded before optional dependencies and code.
 - The final implementation, reference/spec evidence, walkthrough, and selected screenshots are delivered in this repository.
-- The course submission form was inspected. It requires: “I confirm that this submission is entirely my own work, and I understand the consequences of violating the terms and conditions.” That checkbox has **not** been accepted on the learner's behalf. Submission is awaiting the learner's confirmation that this declaration is accurate given the AI assistance used.
-- Portal checkboxes are a learner progress checklist, separate from repository verification and instructor grading. No instructor acceptance or grading has been observed.
+- On 2026-11-05, after the learner explicitly confirmed the authorship declaration was accurate given the AI assistance and authorized submission, the public repository URL was submitted through 4Geeks.
+- The portal now shows **Project pending**, no teacher feedback, and no code review yet. This verifies submission for review; instructor approval and grading have not been observed.
+- The learner authorized updating all task checkboxes; **48 / 48** was verified after reloading the assignment page.
