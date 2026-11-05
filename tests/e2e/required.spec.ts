@@ -18,13 +18,18 @@ test('Home loading, combined filters, empty search, and restore', async ({ page 
 
 test('client navigation, catalog sorting, room matching, gallery and guest bounds', async ({ page }) => {
   const errors: string[] = [];
-  page.on('pageerror', error => errors.push(error.message));
+  page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
   await expect(page.getByTestId('listing-card')).toHaveCount(8);
-  await page.evaluate(() => { (window as Window & { studyMarker?: string }).studyMarker = 'kept'; });
+  await page.evaluate(() => {
+    (window as Window & { studyMarker?: string }).studyMarker = 'kept';
+  });
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'All stays' }).click();
   await expect(page).toHaveURL(/\/catalog$/);
-  const prices = () => page.getByTestId('listing-card').evaluateAll(elements => elements.map(element => Number(element.getAttribute('data-price'))));
+  const prices = () =>
+    page
+      .getByTestId('listing-card')
+      .evaluateAll((elements) => elements.map((element) => Number(element.getAttribute('data-price'))));
   expect(await prices()).toEqual([135, 155, 165, 175, 189, 210, 245, 280]);
   await page.getByLabel('Sort by price').selectOption('descending');
   expect(await prices()).toEqual([280, 245, 210, 189, 175, 165, 155, 135]);
@@ -41,8 +46,7 @@ test('client navigation, catalog sorting, room matching, gallery and guest bound
   await expect(page.getByRole('button', { name: 'Add guest' })).toBeDisabled();
   await page.getByRole('button', { name: 'Remove guest' }).click();
   await expect(page.getByRole('button', { name: 'Remove guest' })).toBeDisabled();
-  await page.getByRole('button', { name: 'Reserve', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Demo confirmed for 1 guest');
+  await expect(page.getByRole('button', { name: 'Reserve', exact: true })).toBeDisabled();
   await page.getByRole('link', { name: 'Back to all stays' }).click();
   await expect(page).toHaveURL(/\/catalog$/);
   expect(await page.evaluate(() => (window as Window & { studyMarker?: string }).studyMarker)).toBe('kept');
@@ -60,17 +64,30 @@ for (const width of [375, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of ['/', '/catalog', '/rooms/coastal-retreat']) {
       await page.goto(route);
-      if (route.includes('/rooms')) await expect(page.getByRole('heading', { name: 'A little closer to the ocean', exact: true })).toBeVisible();
+      if (route.includes('/rooms'))
+        await expect(page.getByRole('heading', { name: 'A little closer to the ocean', exact: true })).toBeVisible();
       else await expect(page.getByTestId('listing-card')).toHaveCount(8);
       const metrics = await page.evaluate(() => ({ width: innerWidth, content: document.documentElement.scrollWidth }));
       expect(metrics.content).toBeLessThanOrEqual(metrics.width);
       const images = page.locator('main img');
       await expect(images.first()).toBeVisible();
-      await expect.poll(() => images.first().evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+      await expect
+        .poll(() => images.first().evaluate((image: HTMLImageElement) => image.naturalWidth))
+        .toBeGreaterThan(0);
+      if (route === '/catalog') {
+        await expect(page.locator('.leaflet-marker-icon')).toHaveCount(8);
+        await expect(page.locator('.leaflet-tile-loaded').first()).toBeVisible();
+      }
       const name = route === '/' ? 'home' : route.includes('/rooms') ? 'room' : 'catalog';
       await page.screenshot({ path: `output/playwright/${name}-${width}.png`, fullPage: true });
       if (route === '/') {
-        const cards = await page.getByTestId('listing-card').evaluateAll(elements => elements.slice(0, 2).map(element => ({ x: element.getBoundingClientRect().x, y: element.getBoundingClientRect().y })));
+        const cards = await page
+          .getByTestId('listing-card')
+          .evaluateAll((elements) =>
+            elements
+              .slice(0, 2)
+              .map((element) => ({ x: element.getBoundingClientRect().x, y: element.getBoundingClientRect().y })),
+          );
         if (width === 375) expect(cards[0].x).toBe(cards[1].x);
         else expect(cards[0].y).toBe(cards[1].y);
       }

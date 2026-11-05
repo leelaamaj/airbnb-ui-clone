@@ -5,7 +5,17 @@
   --font-sans: Arial, Helvetica, sans-serif;
 }
 @layer base {
-  body { @apply bg-white text-ink antialiased; }
-  button, a, input, select { @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral; }
-  button { @apply cursor-pointer disabled:cursor-not-allowed; }
+  body {
+    @apply bg-white text-ink antialiased;
+  }
+  button,
+  a,
+  input,
+  select,
+  summary {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral;
+  }
+  button {
+    @apply cursor-pointer disabled:cursor-not-allowed;
+  }
 }

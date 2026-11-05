@@ -1,6 +1,7 @@
 const paths: Record<string, string> = {
   search: 'M21 21l-5-5m2-6a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z',
-  arrow: 'M5 12h14m-6-6 6 6-6 6', back: 'M19 12H5m6-6-6 6 6 6',
+  arrow: 'M5 12h14m-6-6 6 6-6 6',
+  back: 'M19 12H5m6-6-6 6 6 6',
   heart: 'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z',
   star: 'm12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z',
   home: 'm3 10 9-7 9 7v11h-7v-7h-4v7H3V10Z',
@@ -15,8 +16,20 @@ const paths: Record<string, string> = {
   wifi: 'M2 8a17 17 0 0 1 20 0M5 12a12 12 0 0 1 14 0m-11 4a7 7 0 0 1 8 0m-4 4h.01',
   check: 'm5 12 4 4L19 6',
   pin: 'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Zm-5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
-  minus: 'M5 12h14', plus: 'M5 12h14m-7-7v14',
+  minus: 'M5 12h14',
+  plus: 'M5 12h14m-7-7v14',
 };
 export const Icon = ({ name, className = 'size-5' }: { name: string; className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className}><path d={paths[name] ?? paths.check} /></svg>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.65"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className={className}
+  >
+    <path d={paths[name] ?? paths.check} />
+  </svg>
 );

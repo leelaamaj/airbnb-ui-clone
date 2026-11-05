@@ -1,4 +1,4 @@
- 'use client';
+'use client';
 import { useParams } from 'next/navigation';
 import { RoomView } from '@/components/RoomView';
 const RoomPage = () => {
